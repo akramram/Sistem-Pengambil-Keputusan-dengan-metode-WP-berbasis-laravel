@@ -35,7 +35,7 @@
 					<th>{{$data->kriteria}}</th>
 					<th>{{$data->kepentingan}}</th>
 					<th>{{$data->cost_benefit}}</th>
-					<th><button type="button" class="btn btn-warning">Edit</button></th>
+					<th><button type="button" class="btn btn-info">Edit</button></th>
 				</tr>
         @endforeach
 			</thead>

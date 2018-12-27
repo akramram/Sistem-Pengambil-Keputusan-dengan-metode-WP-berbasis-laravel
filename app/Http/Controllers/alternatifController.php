@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class kriteriaController extends Controller
+class alternatifController extends Controller
 {
-   
+    
 }

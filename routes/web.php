@@ -19,3 +19,10 @@ Route::get('/kriteria', function(){
 
     return view('kriteria',['kriteria'=>$kriteria]);
 });
+
+Route::get('/alternatif', function(){
+    $alternatif=DB::table('alternatif')->get();
+    $kriteria=DB::table('kriteria')->get();
+
+    return view('alternatif',['alternatif'=>$alternatif],['kriteria'=>$kriteria]);
+});
