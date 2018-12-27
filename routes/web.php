@@ -24,5 +24,17 @@ Route::get('/alternatif', function(){
     $alternatif=DB::table('alternatif')->get();
     $kriteria=DB::table('kriteria')->get();
 
-    return view('alternatif',['alternatif'=>$alternatif],['kriteria'=>$kriteria]);
+    return view('alternatif',compact('kriteria','alternatif'));
+});
+Route::get('/analisa', function () {
+    $alternatif=DB::table('alternatif')->get();
+    $kriteria=DB::table('kriteria')->get();
+    
+    $a_count=DB::table('alternatif')->count();
+    $k_count=DB::table('kriteria')->count();
+    return view('analisa',
+        ['alternatif'=>$alternatif],
+        ['kriteria'=>$kriteria],
+        compact('k_count'),
+        ['a_count'=>$a_count]);
 });
