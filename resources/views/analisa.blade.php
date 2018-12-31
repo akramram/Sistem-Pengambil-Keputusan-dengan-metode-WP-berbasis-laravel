@@ -14,31 +14,7 @@
 			</div>
 			<br />
 			<center>
-            <?php
-
-for($i=0;$i<$k_count;$i++){
-    $tkep = $tkep + $kep[$i];  //18
-}
-for($i=0;$i<$k;$i++){
-    $bkep[$i] = ($kep[$i]/$tkep); //5/18
-    $tbkep = $tbkep + $bkep[$i]; //0,2778 + dst
-}
-for($i=0;$i<$k;$i++){
-    if($cb[$i]=="cost"){
-        $pangkat[$i] = (-1) * $bkep[$i];
-    }
-    else{
-        $pangkat[$i] = $bkep[$i];
-    }
-}
-for($i=0;$i<$a;$i++){
-    for($j=0;$j<$k;$j++){
-        $s[$i][$j] = pow(($alt[$i][$j]),$pangkat[$j]);
-    }
-$ss[$i] = $s[$i][0]*$s[$i][1]*$s[$i][2]*$s[$i][3]*$s[$i][4];
-}
-
-?>
+			
 			</center>
 		  </div>
 		</div>

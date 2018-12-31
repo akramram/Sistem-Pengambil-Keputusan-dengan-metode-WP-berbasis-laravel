@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Kriteria;
+use App\Alternatif;
+use DB;
 
 class analisaController extends Controller
 {
@@ -11,11 +13,11 @@ class analisaController extends Controller
                     
     public function analisa(){
 
-        $alt=DB::table('alternatif')->get();
-        $alt_name = DB::table('alternatif')->select('alternatif');
+        $alt = DB::table('alternatif')->select()->get();
+        $alt_name = DB::table('alternatif')->select('alternatif')->get();
         // end($alt_name); $arl2 = key($alt_name)+1; //new
-        $kep = DB::table('kriteria')->select('kepentingan');
-        $cb = DB::table('kriteria')->select('cost_benefit');
+        $kep = DB::table('kriteria')->select('kepentingan')->get();
+        $cb = DB::table('kriteria')->select('cost_benefit')->get();
         $k = kriteria::count();
         $a = alternatif::count();
         $tkep = 0;
@@ -42,6 +44,7 @@ class analisaController extends Controller
             }
         $ss[$i] = $s[$i][0]*$s[$i][1]*$s[$i][2]*$s[$i][3]*$s[$i][4];
         }
+        return view('analisa',compact('ss','a'));
     }
 
 
@@ -103,5 +106,27 @@ class analisaController extends Controller
         echo "</pre></br>";
     }
 
+    public function anal(){
+        $alternatif=DB::table('alternatif')->get();
+        $kriteria=DB::table('kriteria')->get();
+        $kep = DB::table('kriteria')->select('kepentingan');
+        $keps=0;
+        // $kep = array_map(function($keps){
+        //     return(array)$keps;
+        // },$kep);
+
+        $a_count=DB::table('alternatif')->count();
+        $k_count=DB::table('kriteria')->count();
+
+        $tkep = 0;
+        $tbkep = 0;
+        return view('analisa',
+        compact('alternatif',
+                'kriteria',
+                'k_count',
+                'a_count',
+            'tkep','tbkep'),array('kep'=>$kep));
+    }
+    
 
 }
