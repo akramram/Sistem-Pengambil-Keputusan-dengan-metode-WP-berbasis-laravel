@@ -10,47 +10,54 @@ use DB;
 class analisaController extends Controller
 {
     function get_kepentingan(){
-        $kepentingan = DB::table('kriteria')->select()->get();
+        $kep = DB::table('kriteria')->select()->get();
         
-        $i=0;
-        while ($row = $kepentingan->fetch_assoc()) {
-            @$kep[$i] = $row["kepentingan"];
-            $i++;
-        }
-        return $kep;
+        // $b = kriteria::where('id_kriteria','=',1)->first();
+
+        // $keps = ['id_kriteria','kriteria','kepentingan','cost_benefit'];
+
+        // $convert = new ConvertB
+
+
+        // $i=0;
+        // while ($row = $kepentingan->fetch_assoc()) {
+        //     @$kep[$i] = $row["kepentingan"];
+        //     $i++;
+        // }
+        return compact('kep');
     }
     
     function get_costbenefit(){
-        $costbenefit = DB::table('kriteria')->select()->get();
-        $i=0;
-        while ($row = $costbenefit->fetch_assoc()) {
-            @$cb[$i] = $row["cost_benefit"];
-            $i++;
-        }
+        $cb = kriteria::get()->toArray();
+        // $i=0;
+        // while ($row = $costbenefit->fetch_assoc()) {
+        //     @$cb[$i] = $row["cost_benefit"];
+        //     $i++;
+        // }
         return $cb;
     }
     
     function get_alt_name(){ 
-        $alternatif = DB::table('alternatif')->select()->get();
-        $i=0;
-        while ($row = $alternatif->fetch_assoc()) {
-            @$alt[$i] = $row["alternatif"];
-            $i++;
-        }
+        $alt = kriteria::get()->toArray();
+        // $i=0;
+        // while ($row = $alternatif->fetch_assoc()) {
+        //     @$alt[$i] = $row["alternatif"];
+        //     $i++;
+        // }
         return $alt;
     }
     
     function get_alternatif(){ 
-        $alternatif = DB::table('alternatif')->select()->get();
-        $i=0;
-        while ($row = $alternatif->fetch_assoc()) {
-            @$alt[$i][0] = $row["k1"];
-            @$alt[$i][1] = $row["k2"];
-            @$alt[$i][2] = $row["k3"];
-            @$alt[$i][3] = $row["k4"];
-            @$alt[$i][4] = $row["k5"];
-            $i++;
-        }
+        $alt = kriteria::get()->toArray();
+        // $i=0;
+        // while ($row = $alternatif->fetch_assoc()) {
+        //     @$alt[$i][0] = $row["k1"];
+        //     @$alt[$i][1] = $row["k2"];
+        //     @$alt[$i][2] = $row["k3"];
+        //     @$alt[$i][3] = $row["k4"];
+        //     @$alt[$i][4] = $row["k5"];
+        //     $i++;
+        // }
         return $alt;
     }
     
@@ -69,7 +76,7 @@ class analisaController extends Controller
                     
     public function analisa(){
 
-        $alt = self::get_alternatif();
+        $alt = DB::table('alternatif')->select()->get();
         // DB::table('alternatif')->pluck('k1','k2','k3','k4','k5')->get();
         $alt_name = self::get_alt_name();
         // DB::table('alternatif')->pluck('alternatif')->all();
