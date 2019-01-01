@@ -14,7 +14,9 @@
 			</div>
 			<br />
 			<center>
-			
+			<?php
+				
+			?>
 			</center>
 		  </div>
 		</div>
