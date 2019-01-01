@@ -14,9 +14,29 @@
 			</div>
 			<br />
 			<center>
-			<?php
-				
-			?>
+			<table>
+			<thead>
+                                <tr>
+                                    <th>
+                                        Nama
+                                    </th>
+                                    @foreach($kriteria as $k)
+                                        <th>{{ $k->kriteria  }}</th>
+                                    @endforeach
+                                </tr>
+                                </thead>
+								<tbody>
+                                @foreach($alternatif as $p)
+                                    <tr>
+                                        <td>{{ $p->alternatif  }}</td>
+                                        
+                                            @for($i=0;$i<$altcount;$i++)
+                                                <td>{{ $p->id_alternatif[$i] }}</td>
+                                            @endfor
+                                    </tr>
+                                @endforeach
+                                </tbody>
+			</table>
 			</center>
 		  </div>
 		</div>
@@ -29,7 +49,7 @@
 	var barChartData = {
 		labels : [
 			<?php 
-				for($i=0;$i<$a;$i++){
+				for($i=0;$i<$altcount;$i++){
 					echo '"'.$alt_name[$i].'",';
 				}
 			?>
@@ -42,7 +62,7 @@
 				highlightStroke: "rgba(220,220,220,1)",
 				data : [
 					<?php 
-						for($i=0;$i<$a;$i++){
+						for($i=0;$i<$altcount;$i++){
 							echo $v[$i].',';
 						}
 					?>

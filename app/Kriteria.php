@@ -12,4 +12,8 @@ class Kriteria extends Model
         'kepentingan',
         'cost_benefit'
     ];
+
+    // public function nilai(){
+    //     return $this->hasMany('App\Nilai','id_kriteria','id');
+    // }
 }

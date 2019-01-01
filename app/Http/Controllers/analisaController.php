@@ -10,13 +10,14 @@ use DB;
 class analisaController extends Controller
 {
     function get_kepentingan(){
-        $kep = DB::table('kriteria')->select()->get();
+        $kepentingan = DB::table('kriteria')->select()->get();
         
         // $b = kriteria::where('id_kriteria','=',1)->first();
 
-        // $keps = ['id_kriteria','kriteria','kepentingan','cost_benefit'];
+        // $kep = ['id_kriteria','kriteria','kepentingan','cost_benefit'];
 
-        // $convert = new ConvertB
+        // $convert = $kepentingan->kepentingan;
+
 
 
         // $i=0;
@@ -78,7 +79,7 @@ class analisaController extends Controller
 
         $alt = DB::table('alternatif')->select()->get();
         // DB::table('alternatif')->pluck('k1','k2','k3','k4','k5')->get();
-        $alt_name = self::get_alt_name();
+        $alt_name = DB::table('alternatif')->pluck('alternatif')->all();
         // DB::table('alternatif')->pluck('alternatif')->all();
         end($alt_name); 
         $arl2 = key($alt_name)+1; //new
@@ -92,14 +93,85 @@ class analisaController extends Controller
         $tkep = 0;
         $tbkep = 0;
         
-        for($i=0;$i<$k;$i++){
-            $tkep = $tkep + $kep[$i];  //18
+        // for($i=0;$i<$k;$i++){
+        //     $tkep = $tkep + $kep[$i];  //180
+        // }
+        // for($i=0;$i<$k;$i++){
+        //     $bkep[$i] = ($kep[$i]/$tkep); //5/18
+        //     $tbkep = $tbkep + $bkep[$i]; //0,2778 + dst
+        // }
+        // for($i=0;$i<$k;$i++){
+        //     if($cb[$i]=="cost"){
+        //         $pangkat[$i] = (-1) * $bkep[$i];
+        //     }
+        //     else{
+        //         $pangkat[$i] = $bkep[$i];
+        //     }
+        // }
+        // for($i=0;$i<$a;$i++){
+        //     for($j=0;$j<$k;$j++){
+        //         $s[$i][$j] = pow(($alt[$i][$j]),$pangkat[$j]);
+        //     }
+        // $ss[$i] = $s[$i][0]*$s[$i][1]*$s[$i][2]*$s[$i][3]*$s[$i][4];
+        
+        // }
+        // // echo "<b>Hasil Akhir</b></br>";
+		// // 		echo "<table class='table table-striped table-bordered table-hover'>";
+		// // 		echo "<thead><tr><th>Alternatif</th><th>V</th></tr></thead>";
+		// 		$total = 0;
+		// 		for($i=0;$i<$a;$i++){
+		// 			$total = $total + $ss[$i];
+		// 		}
+		// 		for($i=0;$i<$a;$i++){
+		// 			echo "<tr><td><b>".$alt_name[$i]."</b></td>";
+		// 			$v[$i] = round($ss[$i]/$total,6);
+		// 			echo "<td>".$v[$i]."</td></tr>";
+		// 		}
+		// 		echo "</table><hr>";
+		// 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> vektor S <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+		// 		uasort($v,'cmp');
+		// 					for($i=0;$i<$arl2;$i++){ //new for 8 lines below
+		// 						if($i==0)
+		// 							echo "<div class='alert alert-dismissible alert-info'><b><i>Dari tabel tersebut dapat disimpulkan bahwa ".$alt_name[array_search((end($v)), $v)]." mempunyai hasil paling tinggi, yaitu ".current($v);
+		// 						elseif($i==($arl2-1))
+		// 							echo "</br>Dan terakhir ".$alt_name[array_search((prev($v)), $v)]." dengan nilai ".current($v).".</i></b></div>";
+		// 						else
+		// 							echo "</br>Lalu diikuti dengan ".$alt_name[array_search((prev($v)), $v)]." dengan nilai ".current($v);
+        //                     }
+                            
+        return view('analisa',compact('ss','alt','alt_name','kep'));
+    }
+
+    function analisis(){
+        $alternatif = DB::table('alternatif')->select()->get();
+        $alt_name = DB::table('alternatif')->pluck('alternatif')->all();
+        $kriteria = DB::table('kriteria')->select()->get();
+        $kcount = kriteria::count();
+        $altcount = alternatif::count();
+        $kep = DB::table('kriteria')->pluck('kepentingan')->all();
+        $tkep = 0;
+        $tbkep = 0;
+        $cb = DB::table('kriteria')->pluck('cost_benefit')->all();
+        
+        foreach($alternatif as $alt=>$alternatifs){
+            $id_alternatif    = $alternatifs->id_alternatif;
+            $nalternatif       = $alternatifs->alternatif;
+            $k1    = $alternatifs->k1;
+            $k2    = $alternatifs->k2;
+            $k3    = $alternatifs->k3;
+            $k4    = $alternatifs->k4;
+            $k5    = $alternatifs->k5;
         }
-        for($i=0;$i<$k;$i++){
+
+        for($i=0;$i<$kcount;$i++){
+            $tkep = $tkep + $kep[$i];  
+        }
+
+        for($i=0;$i<$kcount;$i++){
             $bkep[$i] = ($kep[$i]/$tkep); //5/18
             $tbkep = $tbkep + $bkep[$i]; //0,2778 + dst
         }
-        for($i=0;$i<$k;$i++){
+        for($i=0;$i<$kcount;$i++){
             if($cb[$i]=="cost"){
                 $pangkat[$i] = (-1) * $bkep[$i];
             }
@@ -107,42 +179,41 @@ class analisaController extends Controller
                 $pangkat[$i] = $bkep[$i];
             }
         }
-        for($i=0;$i<$a;$i++){
-            for($j=0;$j<$k;$j++){
+        for($i=0;$i<$altcount;$i++){
+            for($j=0;$j<$kcount;$j++){
                 $s[$i][$j] = pow(($alt[$i][$j]),$pangkat[$j]);
             }
         $ss[$i] = $s[$i][0]*$s[$i][1]*$s[$i][2]*$s[$i][3]*$s[$i][4];
-        
         }
-        // echo "<b>Hasil Akhir</b></br>";
-		// 		echo "<table class='table table-striped table-bordered table-hover'>";
-		// 		echo "<thead><tr><th>Alternatif</th><th>V</th></tr></thead>";
-				$total = 0;
-				for($i=0;$i<$a;$i++){
-					$total = $total + $ss[$i];
-				}
-				for($i=0;$i<$a;$i++){
-					echo "<tr><td><b>".$alt_name[$i]."</b></td>";
-					$v[$i] = round($ss[$i]/$total,6);
-					echo "<td>".$v[$i]."</td></tr>";
-				}
-				echo "</table><hr>";
-				// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> vektor S <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
-				uasort($v,'cmp');
-							for($i=0;$i<$arl2;$i++){ //new for 8 lines below
-								if($i==0)
-									echo "<div class='alert alert-dismissible alert-info'><b><i>Dari tabel tersebut dapat disimpulkan bahwa ".$alt_name[array_search((end($v)), $v)]." mempunyai hasil paling tinggi, yaitu ".current($v);
-								elseif($i==($arl2-1))
-									echo "</br>Dan terakhir ".$alt_name[array_search((prev($v)), $v)]." dengan nilai ".current($v).".</i></b></div>";
-								else
-									echo "</br>Lalu diikuti dengan ".$alt_name[array_search((prev($v)), $v)]." dengan nilai ".current($v);
-                            }
-                            
-        return view('analisa',compact('ss','a','alt_name','v'));
+
+        $total = 0;
+        for($i=0;$i<$altcount;$i++){
+            $total = $total + $ss[$i];
+        }
+        
+        for($i=0;$i<$altcount;$i++){
+            echo "<tr><td><b>".$alt_name[$i]."</b></td>";
+            $v[$i] = round($ss[$i]/$total,6);
+            echo "<td>".$v[$i]."</td></tr>";
+        }
+
+        return view('analisa', compact('alternatif','kriteria','altcount','kcount','ss','alt_name'));
+    }
+}
+    function jum_kep(){
+        $i=0;
+        $alternatif = DB::table('alternatif')->select()->get();
+        foreach($alternatif as $tkep){
+            $tkep = $tkep + $tkep[$i];
+            $i++;
+        }
+        return $tkep;
+    }
+    function hitung(){
+        
+        for($i=0;$i<$k_count;$i++){
+            $bkep[$i] = ($kep[$i]/$tkep); //5/18
+            $tbkep = $tbkep + $bkep[$i]; //0,2778 + dst
+        }
     }
 
-    
-    
-    
-
-}
