@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use App\Library\Wp as Wp;
 use App\Kriteria;
 use App\Alternatif;
 use DB;
@@ -143,6 +145,7 @@ class analisaController extends Controller
     }
 
     function analisis(){
+
         $alternatif = DB::table('alternatif')->select()->get();
         $alt_name = DB::table('alternatif')->pluck('alternatif')->all();
         $kriteria = DB::table('kriteria')->select()->get();
@@ -186,6 +189,8 @@ class analisaController extends Controller
         $ss[$i] = $s[$i][0]*$s[$i][1]*$s[$i][2]*$s[$i][3]*$s[$i][4];
         }
 
+        dd($s[0]);
+
         $total = 0;
         for($i=0;$i<$altcount;$i++){
             $total = $total + $ss[$i];
@@ -199,7 +204,7 @@ class analisaController extends Controller
 
         return view('analisa', compact('alternatif','kriteria','altcount','kcount','ss','alt_name'));
     }
-}
+    
     function jum_kep(){
         $i=0;
         $alternatif = DB::table('alternatif')->select()->get();
@@ -217,3 +222,29 @@ class analisaController extends Controller
         }
     }
 
+    function fix (){
+
+        $alternatif = DB::table('alternatif')->select('k1', 'k2', 'k3', 'k4', 'k5')->get();
+        $kriteria = DB::table('kriteria')->select('kepentingan')->get();
+
+        
+        
+        $wp = new Wp($alternatif, $kriteria);
+        $hasil = $wp->make();
+
+
+        foreach($hasil as $key => $value){
+
+            $res[$key] = [
+                'id' => $key + 1,
+                'hasil' => $value
+            ]; 
+        }
+
+        DB::table('hasil')->insert($res);
+
+        return view('analisa',compact('res'));
+    }
+    
+    
+}
