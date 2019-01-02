@@ -4,9 +4,8 @@ namespace App\Library;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Wp 
+class Wp extends Model
 {
-
     public $alternatif;
     public $kriteria;
 
@@ -38,13 +37,15 @@ class Wp
 
         return $pangkatBobot;
     }
+    
+    
 
     public function alternatifPangkat($alternatif){
 
         $pangkatBobot = $this->pangkatBobot($this->kriteria);
-       
+        
         foreach($alternatif as $key => $value){
-
+            dd($value);
             $alternatifBobot[$key][0] = pow($value[0], (-1 * ($pangkatBobot[0])));
         
             $alternatifBobot[$key][1] = pow($value[1],  ($pangkatBobot[1]));
@@ -56,20 +57,15 @@ class Wp
             $alternatifBobot[$key][4] = pow($value[4], (-1 * ($pangkatBobot[4])));
 
             
+            // foreach($value as $i => $v){
+            //     if($i %2 == 0)  $alternatifBobot[$key][$i] = pow($v, (-1 * ($pangkatBobot[$i])));
 
-            
+            //     else $alternatifBobot[$key][$i] = pow($v,  ($pangkatBobot[$i]));
 
-
-            /*foreach($value as $i => $v){
-
-                dd($i);
-
-                if($i % 2 == 0)  $alternatifBobot[$key][$i] = pow($v, (-1 * ($pangkatBobot[$i])));
-
-                else $alternatifBobot[$key][$i] = pow($v,  ($pangkatBobot[$i]));
-
-            }*/
+            // }
         }
+
+        
 
         $alt_sum = [1, 1, 1, 1, 1];
 
@@ -89,9 +85,4 @@ class Wp
         return $final;
 
     }
-
-
-
 }
-
-?>

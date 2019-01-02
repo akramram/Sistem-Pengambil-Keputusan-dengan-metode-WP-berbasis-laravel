@@ -147,62 +147,111 @@ class analisaController extends Controller
     function analisis(){
 
         $alternatif = DB::table('alternatif')->select()->get();
-        $alt_name = DB::table('alternatif')->pluck('alternatif')->all();
+        $alt = DB::table('alternatif')->select('k1','k2','k3','k4','k5')->get();
+        $altn = DB::table('alternatif')->select('alternatif')->get();
         $kriteria = DB::table('kriteria')->select()->get();
         $kcount = kriteria::count();
         $altcount = alternatif::count();
-        $kep = DB::table('kriteria')->pluck('kepentingan')->all();
+        $kepentingan = DB::table('kriteria')->select('kepentingan')->get();
         $tkep = 0;
         $tbkep = 0;
-        $cb = DB::table('kriteria')->pluck('cost_benefit')->all();
+        $cb = DB::table('kriteria')->select('cost_benefit')->get();
         
-        foreach($alternatif as $alt=>$alternatifs){
-            $id_alternatif    = $alternatifs->id_alternatif;
-            $nalternatif       = $alternatifs->alternatif;
-            $k1    = $alternatifs->k1;
-            $k2    = $alternatifs->k2;
-            $k3    = $alternatifs->k3;
-            $k4    = $alternatifs->k4;
-            $k5    = $alternatifs->k5;
-        }
+        foreach($altn as $key => $value){
+            foreach($value as $v){
 
-        for($i=0;$i<$kcount;$i++){
-            $tkep = $tkep + $kep[$i];  
+                $alt_name[$key] = $v;
+                
+            }
+            
         }
+        foreach($kepentingan as $nama => $value){
+            foreach($value as $isi){
+                
+                $tkep = $tkep + $isi;
+            }
+            
+        }
+        // for($i=0;$i<$kcount;$i++){
+        //     $tkep = $tkep + $kep[$i];  //18
+        // }
+        
+        foreach($kepentingan as $nama => $value){
+            foreach($value as $v){
+                
+                $bkep[$nama] = ($v/$tkep);
+                
+            }
+            
+            
+            $tbkep = $tbkep+$bkep[$nama];
+        }
+        
 
-        for($i=0;$i<$kcount;$i++){
-            $bkep[$i] = ($kep[$i]/$tkep); //5/18
-            $tbkep = $tbkep + $bkep[$i]; //0,2778 + dst
-        }
-        for($i=0;$i<$kcount;$i++){
-            if($cb[$i]=="cost"){
-                $pangkat[$i] = (-1) * $bkep[$i];
+        // for($i=0;$i<$kcount;$i++){
+        //     $bkep[$i] = ($kep[$i]/$tkep); //5/18
+        //     $tbkep = $tbkep + $bkep[$i]; //0,2778 + dst
+        // }
+
+        foreach($cb as $nama => $isi){
+            if($isi=="COST"){
+                $pangkat[$nama] = (-1) * $bkep[$nama];
             }
             else{
-                $pangkat[$i] = $bkep[$i];
+                $pangkat[$nama] = $bkep[$nama];
             }
-        }
-        for($i=0;$i<$altcount;$i++){
-            for($j=0;$j<$kcount;$j++){
-                $s[$i][$j] = pow(($alt[$i][$j]),$pangkat[$j]);
-            }
-        $ss[$i] = $s[$i][0]*$s[$i][1]*$s[$i][2]*$s[$i][3]*$s[$i][4];
-        }
-
-        dd($s[0]);
-
-        $total = 0;
-        for($i=0;$i<$altcount;$i++){
-            $total = $total + $ss[$i];
+            
         }
         
-        for($i=0;$i<$altcount;$i++){
-            echo "<tr><td><b>".$alt_name[$i]."</b></td>";
-            $v[$i] = round($ss[$i]/$total,6);
-            echo "<td>".$v[$i]."</td></tr>";
+        // for($i=0;$i<$kcount;$i++){
+        //     if($cb[$i]=="cost"){
+        //         $pangkat[$i] = (-1) * $bkep[$i];
+        //     }
+        //     else{
+        //         $pangkat[$i] = $bkep[$i];
+        //     }
+        // }
+        foreach($alt as $nama => $isi){
+            $i=0;
+            foreach($isi as $v){
+                
+                $s[$nama][$i] = pow($v,$pangkat[$nama]);
+                $i++;
+            }
+            // dd($s[0][0]);
+            $ss[$nama] = $s[$nama][0]*$s[$nama][1]*$s[$nama][2]*$s[$nama][3]*$s[$nama][4];
         }
+        // dd($ss);
+        // for($i=0;$i<$altcount;$i++){
+        //     for($j=0;$j<$kcount;$j++){
+        //         $s[$i][$j] = pow(($alt[$i][$j]),$pangkat[$j]);
+        //     }
+        // $ss[$i] = $s[$i][0]*$s[$i][1]*$s[$i][2]*$s[$i][3]*$s[$i][4];
+        // }
 
-        return view('analisa', compact('alternatif','kriteria','altcount','kcount','ss','alt_name'));
+
+        $total = 0;
+        // for($i=0;$i<$altcount;$i++){
+        //     $total = $total + $ss[$i];
+        // }
+        
+        foreach($ss as $key){
+            
+            $total = $total + $ss[$key];
+        }
+        //  dd($ss);
+        foreach($ss as $key => $value){
+            
+            $vs[$key] = $ss[$key]/$total;
+        }
+        
+        // for($i=0;$i<$altcount;$i++){
+        //     // echo "<tr><td><b>".$alt_name[$i]."</b></td>";
+        //     $v[$i] = round($ss[$i]/$total,6);
+        //     // echo "<td>".$v[$i]."</td></tr>";
+        // }
+
+        return view('analisa', compact('alternatif','kriteria','altcount','kcount','ss','alt_name','vs'));
     }
     
     function jum_kep(){
@@ -224,9 +273,9 @@ class analisaController extends Controller
 
     function fix (){
 
-        $alternatif = DB::table('alternatif')->select('k1', 'k2', 'k3', 'k4', 'k5')->get();
+        // $alternatif = DB::table('alternatif')->select('k1', 'k2', 'k3', 'k4', 'k5')->get();
+        $alternatif = alternatif::get(['k1', 'k2', 'k3', 'k4', 'k5'])->toArray();
         $kriteria = DB::table('kriteria')->select('kepentingan')->get();
-
         
         
         $wp = new Wp($alternatif, $kriteria);

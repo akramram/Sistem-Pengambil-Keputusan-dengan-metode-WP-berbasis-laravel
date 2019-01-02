@@ -47,4 +47,4 @@ Route::get('/alternatif', function(){
 //             'a_count',
 //         'tkep','tbkep'),array('kep'=>$kep));
 // });
-Route::get('/analisa','analisaController@fix');
+Route::get('/analisa','analisaController@analisis');

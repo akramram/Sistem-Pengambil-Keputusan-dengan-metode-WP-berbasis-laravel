@@ -63,7 +63,7 @@
 				data : [
 					<?php 
 						for($i=0;$i<$altcount;$i++){
-							echo $v[$i].',';
+							echo $vs[$i].',';
 						}
 					?>
 				]
