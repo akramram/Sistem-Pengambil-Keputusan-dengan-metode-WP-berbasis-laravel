@@ -24,41 +24,32 @@ class analisaController extends Controller
         $tbkep = 0;
         $cb = DB::table('kriteria')->select('cost_benefit')->get();
 
-        foreach ($altn as $key => $value) {
+        foreach ($altn as $key => $value) { //return nama alternatif ke array
             foreach ($value as $v) {
 
                 $alt_name[$key] = $v;
 
             }
 
-        }//return nama alternatif
-        foreach ($kepentingan as $nama => $value) {
+        }
+        foreach ($kepentingan as $nama => $value) { // jumlah kepentingan kriteria
             foreach ($value as $isi) {
 
                 $tkep = $tkep + $isi;
             }
 
-        }//jumlah kriteriz
-        // for($i=0;$i<$kcount;$i++){
-        //     $tkep = $tkep + $kep[$i];  //18
-        // }
+        }
 
-        foreach ($kepentingan as $nama => $value) {
+        foreach ($kepentingan as $nama => $value) { //hasil pembagian kriteria
             foreach ($value as $v) {
 
                 $bkep[$nama] = ($v / $tkep);
 
-            }//hasil pembagian kriteria
+            }
+        }
 
-            // $tbkep = $tbkep + $bkep[$nama];
-        }//value kriteria semuanya
 
-        // for($i=0;$i<$kcount;$i++){
-        //     $bkep[$i] = ($kep[$i]/$tkep); //5/18
-        //     $tbkep = $tbkep + $bkep[$i]; //0,2778 + dst
-        // }
-
-        foreach ($cb as $nama => $isi) {
+        foreach ($cb as $nama => $isi) { // menentukan pangkat 
             if ($isi == "COST") {
                 $pangkat[$nama] = (-1) * $bkep[$nama];
             } else {
@@ -68,52 +59,30 @@ class analisaController extends Controller
         }
         // dd($pangkat[0]);
 
-        // for($i=0;$i<$kcount;$i++){
-        //     if($cb[$i]=="cost"){
-        //         $pangkat[$i] = (-1) * $bkep[$i];
-        //     }
-        //     else{
-        //         $pangkat[$i] = $bkep[$i];
-        //     }
-        // }
-        foreach ($alt as $nama => $isi) {
+        foreach ($alt as $nama => $isi) { 
             $i = 0;
-            foreach ($isi as $v) {
+            foreach ($isi as $v) { // operasi pemangkatan
                 $s[$nama][$i] = pow($v, $pangkat[$nama]);
                 
                 $i++;
             }
             // dd($s[1][1]);
-            $ss[$nama] = $s[$nama][0] * $s[$nama][1] * $s[$nama][2] * $s[$nama][3] * $s[$nama][4];
+            $ss[$nama] = $s[$nama][0] * $s[$nama][1] * $s[$nama][2] * $s[$nama][3] * $s[$nama][4]; // hasil setelah di pangkatkan dan di kalikan
         }
         // dd($ss);
-        // for($i=0;$i<$altcount;$i++){
-        //     for($j=0;$j<$kcount;$j++){
-        //         $s[$i][$j] = pow(($alt[$i][$j]),$pangkat[$j]);
-        //     }
-        // $ss[$i] = $s[$i][0]*$s[$i][1]*$s[$i][2]*$s[$i][3]*$s[$i][4];
-        // }
 
         $total = 0;
-        // for($i=0;$i<$altcount;$i++){
-        //     $total = $total + $ss[$i];
-        // }
-
-        foreach ($ss as $key) {
+        foreach ($ss as $key) { //menghitung Total
 
             $total = $total + $ss[$key];
         }
+
         //  dd($ss);
-        foreach ($ss as $key => $value) {
+        foreach ($ss as $key => $value) { //membagi dengan total
 
             $vs[$key] = $ss[$key] / $total;
         }
 
-        // for($i=0;$i<$altcount;$i++){
-        //     // echo "<tr><td><b>".$alt_name[$i]."</b></td>";
-        //     $v[$i] = round($ss[$i]/$total,6);
-        //     // echo "<td>".$v[$i]."</td></tr>";
-        // }
 
         return view('analisa', compact('alternatif', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs'));
     }
@@ -121,8 +90,7 @@ class analisaController extends Controller
     public function fix()
     {
 
-        // $alternatif = DB::table('alternatif')->select('k1', 'k2', 'k3', 'k4', 'k5')->get();
-        $alternatif = alternatif::get(['k1', 'k2', 'k3', 'k4', 'k5'])->toArray();
+        $alternatif = DB::table('alternatif')->select('k1', 'k2', 'k3', 'k4', 'k5')->get();
         $kriteria = DB::table('kriteria')->select('kepentingan')->get();
 
         $wp = new Wp($alternatif, $kriteria);
