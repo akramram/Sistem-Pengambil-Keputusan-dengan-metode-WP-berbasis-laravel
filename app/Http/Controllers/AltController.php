@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Alternatif;
 use DB;
 
 class AltController extends Controller
@@ -83,8 +84,8 @@ class AltController extends Controller
      */
     public function destroy($id)
     {
-      $data = Alternatif::where('id_alternatif',$id)->first();
-      $data->delete();
-      return redirect()->route('alternatif.index')->with('alert-success','Data berhasi dihapus!');
+      $data = DB::table('alternatif')->where('id_alternatif', $id)->delete();
+      // $data->delete();
+      return redirect()->back()->with('alert-success','Data berhasi dihapus!');
     }
 }

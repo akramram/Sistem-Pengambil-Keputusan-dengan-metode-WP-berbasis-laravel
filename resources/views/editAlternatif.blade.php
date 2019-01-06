@@ -25,15 +25,15 @@
             </div>
             <div class="form-group {{ !$errors->has('title') ?: 'has-error' }}">
                 <label>Bentuk</label>
-                <input type="text" name="bentuk" class="form-control" value='$key->k3'>
+                <input type="text" name="bentuk" class="form-control" value='{{$key->k3}}'>
             </div>
             <div class="form-group {{ !$errors->has('title') ?: 'has-error' }}">
                 <label>Berat</label>
-                <input type="text" name="berat" class="form-control" value='$key->k4'>
+                <input type="text" name="berat" class="form-control" value='{{$key->k4}}'>
             </div>
             <div class="form-group {{ !$errors->has('title') ?: 'has-error' }}">
                 <label>Harga</label>
-                <input type="text" name="harga" class="form-control" value='$key->k5'>
+                <input type="text" name="harga" class="form-control" value='{{$key->k5}}'>
             </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Tambah Alternatif Baru</button>
