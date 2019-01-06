@@ -14,29 +14,36 @@
     </div>
     <br />
     <center>
-      <table>
-        <thead>
-          <tr>
+    <h2>Hasil Akhir</h2>
+      <table class="table table-striped table-bordered table-hover">
             <th>
-              Nama
+              Nama 
             </th>
-            @foreach($kriteria as $k)
-            <th>{{ $k->kriteria  }}</th>
-            @endforeach
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($alternatif as $p)
-          <tr>
-            <td>{{ $p->alternatif  }}</td>
+
+            
+            <th> V</th>
+            
 
             @for($i=0;$i<$altcount;$i++)
-            <td>{{ $p->id_alternatif[$i] }}</td>
-            @endfor
+          <tr>
+            <td>{{ $alt_name[$i]  }}</td>
+            <td>{{ $vs[$i] }}</td>
+            
           </tr>
-          @endforeach
-        </tbody>
+          @endfor
       </table>
+      
+      </table>
+      <div class="alert alert-dismissible alert-info">
+      
+        @foreach($sorted as $key => $value)
+        
+          @if($key==0) <b>Dari tabel tersebut dapat disimpulkan bahwa <i>{{$value->alternatif}}</i> mempunyai hasil paling tinggi, yaitu {{$value->hasil}}</b>
+          @elseif($key==$altcount) <p>dan Terakhir <i>{{$value->alternatif}}</i> mempunyai hasil paling rendah, yaitu {{$value->hasil}}</p>
+          @else <p>diikuti <i>{{$value->alternatif}}</i> dengan hasil {{$value->hasil}}</p>
+          @endif
+        @endforeach
+      </div>
     </center>
   </div>
 </div>

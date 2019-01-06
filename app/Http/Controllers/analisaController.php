@@ -81,10 +81,26 @@ class analisaController extends Controller
         foreach ($ss as $key => $value) { //membagi dengan total
 
             $vs[$key] = $ss[$key] / $total;
+
         }
 
+        foreach($vs as $key =>$value){
+            // dd($value);
+            $res[$key] = [
+                'id_alternatif' => $key + 1,
+                'alternatif' => $alt_name[$key],
+                'hasil' => $value
+            ];
+        }
+        // dd($res);
+        DB::table('hasil')->truncate();
+        DB::table('hasil')->insert($res);
+            // dd($vs);
 
-        return view('analisa', compact('alternatif', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs'));
+        $sorted = DB::table('hasil')->orderBy('hasil','desc')->get();
+        
+
+        return view('analisa', compact('alternatif', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted'));
     }
 
     public function fix()
@@ -102,6 +118,7 @@ class analisaController extends Controller
                 'id' => $key + 1,
                 'hasil' => $value,
             ];
+            
         }
 
         DB::table('hasil')->insert($res);
