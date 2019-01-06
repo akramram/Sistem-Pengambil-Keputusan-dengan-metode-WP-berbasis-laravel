@@ -72,8 +72,8 @@ class analisaController extends Controller
         // dd($ss);
 
         $total = 0;
-        foreach ($ss as $key) { //menghitung Total
-
+        foreach ($ss as $key => $v) { //menghitung Total
+            
             $total = $total + $ss[$key];
         }
 

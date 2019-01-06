@@ -1,7 +1,7 @@
 @section('header')
 <html>
     <head>
-        <title>App Name - @yield('title')</title>
+        <title>SPK WP @yield('title')</title>
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('css/cerulean.min.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
