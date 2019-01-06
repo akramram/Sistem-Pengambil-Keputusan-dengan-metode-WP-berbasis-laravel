@@ -51,8 +51,8 @@
                     <th>{{$data->k4}}</th>
                     <th>{{$data->k5}}</th>
 					<th>
-                    <a class="btn btn-info" href="{{route('editAlternatif',$data->id_alternatif)}}">Edit</a>
-                    <form action="{{ route('destroy', $data->id_alternatif)}}" method="post">
+                    <a class="btn btn-info" href="{{route('alternatif.edit',$data->id_alternatif) }}">Edit</a>
+                    <form action="{{ route('alternatif.destroy', $data->id_alternatif)}}" method="post">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger" type="submit">Delete</button>

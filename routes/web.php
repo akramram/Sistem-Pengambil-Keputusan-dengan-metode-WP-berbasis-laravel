@@ -11,6 +11,8 @@
 |
 */
 
+Route::resource('alternatif', 'AltController');
+
 Route::get('/', function () {
     return view('home');
 });
@@ -26,6 +28,12 @@ Route::get('/alternatif', function(){
 
     return view('alternatif',compact('kriteria','alternatif'));
 });
+
+// Route::get('/editAlternatif', function(){
+//     $alternatif=DB::table('kriteria')->get();
+//
+//     return view('alternatif', compact('alternatif'));
+// });
 
 Route::get('/addalternatif', 'alternatifController@add');
 Route::get('/editAlternatif/{$id_alternatif}', 'alternatifController@edit')-> name('editAlternatif');

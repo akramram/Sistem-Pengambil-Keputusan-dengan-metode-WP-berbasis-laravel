@@ -11,10 +11,10 @@ class alternatifController extends Controller
       return view('addalternatif');
     }
 
-    public function edit($id_alternatif){
-      $data = Alternatif::find($id_alternatif);
-      return view('editAlternatif',compact('data'));
-    }
+    // public function edit($id_alternatif){
+    //   $data = Alternatif::find($id_alternatif);
+    //   return view('editAlternatif',compact('data'));
+    // }
 
     public function destroy($id_alternatif){
      $data = Alternatif::find($id_alternatif);
