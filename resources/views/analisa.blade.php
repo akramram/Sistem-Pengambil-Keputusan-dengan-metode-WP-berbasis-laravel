@@ -39,7 +39,7 @@
         @foreach($sorted as $key => $value)
         
           @if($key==0) <b>Dari tabel tersebut dapat disimpulkan bahwa <i>{{$value->alternatif}}</i> mempunyai hasil paling tinggi, yaitu {{$value->hasil}}</b>
-          @elseif($key==$altcount) <p>dan Terakhir <i>{{$value->alternatif}}</i> mempunyai hasil paling rendah, yaitu {{$value->hasil}}</p>
+          
           @else <p>diikuti <i>{{$value->alternatif}}</i> dengan hasil {{$value->hasil}}</p>
           @endif
         @endforeach
