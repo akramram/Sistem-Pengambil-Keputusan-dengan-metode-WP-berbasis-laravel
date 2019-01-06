@@ -28,12 +28,12 @@
 							// $i=0;
 						?>
 		  <div class="panel-body table-responsive">
-			<a class='btn btn-primary' href='add-alternatif.php'> Tambah Data Alternatif</a><br /><br />
+			<a class='btn btn-primary' href='addalternatif'> Tambah Data Alternatif</a><br /><br />
 			<table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>No.</th>
-					<th>Alternatif</th>       
+					<th>Alternatif</th>
                     @foreach($kriteria as $key=>$d)
                     <th>{{$d->kriteria}}</th>
                     @endforeach
@@ -51,30 +51,34 @@
                     <th>{{$data->k4}}</th>
                     <th>{{$data->k5}}</th>
 					<th>
-                    <button type="button" class="btn btn-info">Edit</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <a class="btn btn-info" href="{{route('editAlternatif',$data->id_alternatif)}}">Edit</a>
+                    <form action="{{ route('destroy', $data->id_alternatif)}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
                     </th>
                     </tr>
                 @endforeach
 			</thead>
-		 
+
 			<tfoot>
 				<tr>
                     <th>No.</th>
-					<th>Alternatif</th>       
+					<th>Alternatif</th>
                     @foreach($kriteria as $key=>$d)
                     <th>{{$d->kriteria}}</th>
                     @endforeach
 					<th>Pilihan</th>
 				</tr>
 			</tfoot>
-		 
+
 			<tbody>
 										<?php
-												
+
 										?>
 			</tbody>
 			</table>
 		  </div>
-		  
+
 @stop

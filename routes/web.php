@@ -27,4 +27,8 @@ Route::get('/alternatif', function(){
     return view('alternatif',compact('kriteria','alternatif'));
 });
 
+Route::get('/addalternatif', 'alternatifController@add');
+Route::get('/editAlternatif/{$id_alternatif}', 'alternatifController@edit')-> name('editAlternatif');
+Route::post('/deletealternatif/{$id_alternatif}', 'alternatifController@destroy')->name('destroy');
+Route::post('/addalter', 'alternatifController@addAlternatif');
 Route::get('/analisa','analisaController@analisis');
