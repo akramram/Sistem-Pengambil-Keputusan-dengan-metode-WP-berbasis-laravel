@@ -40,3 +40,4 @@ Route::get('/editAlternatif/{$id_alternatif}', 'alternatifController@edit')-> na
 Route::post('/deletealternatif/{$id_alternatif}', 'alternatifController@destroy')->name('destroy');
 Route::post('/addalter', 'alternatifController@addAlternatif');
 Route::get('/analisa','analisaController@analisis');
+Route::get('/perhitungan','hitungController@hitung');

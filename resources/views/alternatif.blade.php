@@ -43,7 +43,7 @@
 
                 @foreach($alternatif as $key=>$data)
                     <tr>
-                    <th>{{$data->id_alternatif}}</th>
+                    <th>{{$key+1}}</th>
                     <th>{{$data->alternatif}}</th>
                     <th>{{$data->k1}}</th>
                     <th>{{$data->k2}}</th>

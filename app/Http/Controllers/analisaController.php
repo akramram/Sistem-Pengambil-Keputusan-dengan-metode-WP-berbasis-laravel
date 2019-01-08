@@ -126,4 +126,9 @@ class analisaController extends Controller
         return view('analisa', compact('res'));
     }
 
+    public function returnPerhitungan(){
+        
+        return view('perhitungan', compact('alternatif', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted'));
+    }
+
 }
