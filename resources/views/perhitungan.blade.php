@@ -56,17 +56,48 @@
             </tr>
               <tr>
                 <td><b>Pangkat</b></td>
+                @foreach($pangkat as $key => $v)
+                <td>{{$v}}</td>
+                @endforeach
               </tr>
           </table><hr>
 
               <b>Perhitungan Nilai S</b>
               <table class="table table-striped table-bordered table-hover">
-                <thead><tr><th>Alternatif</th><th>S</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Alternatif</th>
+                    <th>S</th>
+                  </tr>
+                </thead>
+                @foreach($ss as $key => $v)
+                <tr>
+                  <td>A{{$key}}</td>
+                  <td>{{ $v }}</td>
+                </tr>
+                @endforeach
+                <!-- <tr>
+                  <td>tada</td>
+                  <td>tada</td>
+                </tr>
+                <tr>
+                  <td>tada</td>
+                  <td>tada</td>
+                </tr> -->
               </table><hr>
 
               <b>Hasil Akhir</b>
               <table class="table table-striped table-bordered table-hover">
-                <thead><tr><th>Alternatif</th><th>V</th></tr></thead>
+                <th>
+                  Nama
+                </th>
+                <th> V</th>
+                @for($i=0;$i<$altcount;$i++)
+              <tr>
+                <td>{{ $alt_name[$i]  }}</td>
+                <td>{{ $vs[$i] }}</td>
+              </tr>
+              @endfor
               </table><hr>
             </center>
           </div>

@@ -82,6 +82,7 @@ class hitungController extends Controller
 
             $vs[$key] = $ss[$key] / $total;
 
+
         }
 
         foreach($vs as $key =>$value){
@@ -100,7 +101,7 @@ class hitungController extends Controller
         $sorted = DB::table('hasil')->orderBy('hasil','desc')->get();
 
 
-        return view('perhitungan', compact('alternatif','bkep', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted', 'jumlah'));
+        return view('perhitungan', compact('alternatif','bkep', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted', 'jumlah', 'pangkat'));
     }
     public function kriteria(){
       $kriteria=DB::table('kriteria')->get();
