@@ -45,12 +45,11 @@ class hitungController extends Controller
             foreach ($value as $v) {
 
                 $bkep[$nama] = ($v / $tkep);
-
             }
         }
 
 
-        foreach ($cb as $nama => $isi) { // menentukan pangkat 
+        foreach ($cb as $nama => $isi) { // menentukan pangkat
             if ($isi == "COST") {
                 $pangkat[$nama] = (-1) * $bkep[$nama];
             } else {
@@ -60,11 +59,11 @@ class hitungController extends Controller
         }
         // dd($pangkat[0]);
 
-        foreach ($alt as $nama => $isi) { 
+        foreach ($alt as $nama => $isi) {
             $i = 0;
             foreach ($isi as $v) { // operasi pemangkatan
                 $s[$nama][$i] = pow($v, $pangkat[$nama]);
-                
+
                 $i++;
             }
             // dd($s[1][1]);
@@ -74,7 +73,7 @@ class hitungController extends Controller
 
         $total = 0;
         foreach ($ss as $key => $v) { //menghitung Total
-            
+
             $total = $total + $ss[$key];
         }
 
@@ -99,9 +98,13 @@ class hitungController extends Controller
             // dd($vs);
 
         $sorted = DB::table('hasil')->orderBy('hasil','desc')->get();
-        
+
 
         return view('perhitungan', compact('alternatif','bkep', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted'));
     }
-}
+    public function kriteria(){
+      $kriteria=DB::table('kriteria')->get();
 
+      return view('perhitungan', compact('kriteria'));
+    }
+}
