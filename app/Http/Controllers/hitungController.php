@@ -43,8 +43,8 @@ class hitungController extends Controller
 
         foreach ($kepentingan as $nama => $value) { //hasil pembagian kriteria
             foreach ($value as $v) {
-
                 $bkep[$nama] = ($v / $tkep);
+                $jumlah = array_sum($bkep);
             }
         }
 
@@ -100,7 +100,7 @@ class hitungController extends Controller
         $sorted = DB::table('hasil')->orderBy('hasil','desc')->get();
 
 
-        return view('perhitungan', compact('alternatif','bkep', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted'));
+        return view('perhitungan', compact('alternatif','bkep', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted', 'jumlah'));
     }
     public function kriteria(){
       $kriteria=DB::table('kriteria')->get();

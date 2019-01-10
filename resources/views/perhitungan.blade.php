@@ -37,6 +37,10 @@
             <td>
               <b>Bobot Kepentingan</b>
             </td>
+            @foreach($bkep as $key => $v)
+            <td>{{$v}}</td>
+            @endforeach
+            <td>{{$jumlah}}</td>
           </tr>
           </table><hr>
 
@@ -44,9 +48,16 @@
           <table class="table table-striped table-bordered table-hover">
             <thead><tr><th></th><th>K1</th><th>K2</th><th>K3</th><th>K4</th><th>K5</th></tr></thead>
 
-            <tr><td><b>Cost/Benefit</b></td>
-              <tr><td><b>Pangkat</b></td>
-              </table><hr>
+            <tr>
+              <td><b>Cost/Benefit</b></td>
+              @foreach($kriteria as $key => $v)
+              <td>{{$v->cost_benefit}}</td>
+              @endforeach
+            </tr>
+              <tr>
+                <td><b>Pangkat</b></td>
+              </tr>
+          </table><hr>
 
               <b>Perhitungan Nilai S</b>
               <table class="table table-striped table-bordered table-hover">
