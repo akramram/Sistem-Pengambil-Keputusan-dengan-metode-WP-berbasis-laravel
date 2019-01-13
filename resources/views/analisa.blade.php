@@ -17,29 +17,27 @@
     <h2>Hasil Akhir</h2>
       <table class="table table-striped table-bordered table-hover">
             <th>
-              Nama 
+              Nama
             </th>
 
-            
-            <th> V</th>
-            
 
+            <th> V</th>
             @for($i=0;$i<$altcount;$i++)
           <tr>
             <td>{{ $alt_name[$i]  }}</td>
             <td>{{ $vs[$i] }}</td>
-            
+
           </tr>
           @endfor
       </table>
-      
+
       </table>
       <div class="alert alert-dismissible alert-info">
-      
+
         @foreach($sorted as $key => $value)
-        
+
           @if($key==0) <b>Dari tabel tersebut dapat disimpulkan bahwa <i>{{$value->alternatif}}</i> mempunyai hasil paling tinggi, yaitu {{$value->hasil}}</b>
-          
+
           @else <p>diikuti <i>{{$value->alternatif}}</i> dengan hasil {{$value->hasil}}</p>
           @endif
         @endforeach

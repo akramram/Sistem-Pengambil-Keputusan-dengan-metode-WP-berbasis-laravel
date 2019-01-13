@@ -49,7 +49,7 @@ class analisaController extends Controller
         }
 
 
-        foreach ($cb as $nama => $isi) { // menentukan pangkat 
+        foreach ($cb as $nama => $isi) { // menentukan pangkat
             if ($isi == "COST") {
                 $pangkat[$nama] = (-1) * $bkep[$nama];
             } else {
@@ -59,11 +59,11 @@ class analisaController extends Controller
         }
         // dd($pangkat[0]);
 
-        foreach ($alt as $nama => $isi) { 
+        foreach ($alt as $nama => $isi) {
             $i = 0;
             foreach ($isi as $v) { // operasi pemangkatan
                 $s[$nama][$i] = pow($v, $pangkat[$nama]);
-                
+
                 $i++;
             }
             // dd($s[1][1]);
@@ -73,7 +73,7 @@ class analisaController extends Controller
 
         $total = 0;
         foreach ($ss as $key => $v) { //menghitung Total
-            
+
             $total = $total + $ss[$key];
         }
 
@@ -98,36 +98,36 @@ class analisaController extends Controller
             // dd($vs);
 
         $sorted = DB::table('hasil')->orderBy('hasil','desc')->get();
-        
+
 
         return view('analisa', compact('alternatif', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted'));
     }
 
-    public function fix()
-    {
-
-        $alternatif = DB::table('alternatif')->select('k1', 'k2', 'k3', 'k4', 'k5')->get();
-        $kriteria = DB::table('kriteria')->select('kepentingan')->get();
-
-        $wp = new Wp($alternatif, $kriteria);
-        $hasil = $wp->make();
-
-        foreach ($hasil as $key => $value) {
-
-            $res[$key] = [
-                'id' => $key + 1,
-                'hasil' => $value,
-            ];
-            
-        }
-
-        DB::table('hasil')->insert($res);
-
-        return view('analisa', compact('res'));
-    }
+    // public function fix()
+    // {
+    //
+    //     $alternatif = DB::table('alternatif')->select('k1', 'k2', 'k3', 'k4', 'k5')->get();
+    //     $kriteria = DB::table('kriteria')->select('kepentingan')->get();
+    //
+    //     $wp = new Wp($alternatif, $kriteria);
+    //     $hasil = $wp->make();
+    //
+    //     foreach ($hasil as $key => $value) {
+    //
+    //         $res[$key] = [
+    //             'id' => $key + 1,
+    //             'hasil' => $value,
+    //         ];
+    //
+    //     }
+    //
+    //     DB::table('hasil')->insert($res);
+    //
+    //     return view('analisa', compact('res'));
+    // }
 
     public function returnPerhitungan(){
-        
+
         return view('perhitungan', compact('alternatif', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted'));
     }
 

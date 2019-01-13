@@ -32,6 +32,7 @@
           @foreach($kriteria as $key => $v)
           <td>{{$v->kepentingan}}</td>
           @endforeach
+          <td>{{$tkep}}</td>
         </tr>
           <tr>
             <td>
@@ -99,7 +100,17 @@
               </tr>
               @endfor
               </table><hr>
-            </center>
+            <div class="alert alert-dismissible alert-info">
+
+              @foreach($sorted as $key => $value)
+
+                @if($key==0) <b>Dari tabel tersebut dapat disimpulkan bahwa <i>{{$value->alternatif}}</i> mempunyai hasil paling tinggi, yaitu {{$value->hasil}}</b>
+
+                @else <p>diikuti <i>{{$value->alternatif}}</i> dengan hasil {{$value->hasil}}</p>
+                @endif
+              @endforeach
+            </div>
+          </center>
           </div>
         </div>
         @stop

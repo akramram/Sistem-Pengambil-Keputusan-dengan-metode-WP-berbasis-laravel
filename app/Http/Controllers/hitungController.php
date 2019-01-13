@@ -35,7 +35,6 @@ class hitungController extends Controller
         }
         foreach ($kepentingan as $nama => $value) { // jumlah kepentingan kriteria
             foreach ($value as $isi) {
-
                 $tkep = $tkep + $isi;
             }
 
@@ -45,6 +44,7 @@ class hitungController extends Controller
             foreach ($value as $v) {
                 $bkep[$nama] = ($v / $tkep);
                 $jumlah = array_sum($bkep);
+                // $jumlah_tkep = array_sum($tkep);
             }
         }
 
@@ -101,7 +101,7 @@ class hitungController extends Controller
         $sorted = DB::table('hasil')->orderBy('hasil','desc')->get();
 
 
-        return view('perhitungan', compact('alternatif','bkep', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted', 'jumlah', 'pangkat'));
+        return view('perhitungan', compact('alternatif','bkep', 'kriteria', 'altcount', 'kcount', 'ss', 'alt_name', 'vs','res','sorted', 'jumlah', 'pangkat', 'tkep'));
     }
     public function kriteria(){
       $kriteria=DB::table('kriteria')->get();
